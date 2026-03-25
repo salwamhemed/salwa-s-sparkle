@@ -177,7 +177,7 @@ const SkillsSection = () => (
         whileInView="visible"
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="w-full aspect-[16/10] sm:aspect-[16/8] glass-card overflow-hidden"
+        className="w-full h-[400px] sm:h-[500px] lg:h-[550px] glass-card overflow-hidden"
       >
         <Suspense
           fallback={
