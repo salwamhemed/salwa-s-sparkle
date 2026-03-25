@@ -86,7 +86,6 @@ function SkillBubble({ label, color, position, size }: SkillBubbleProps) {
           color="#4a2040"
           anchorX="center"
           anchorY="middle"
-          font="https://fonts.gstatic.com/s/dmsans/v15/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAop9hR2T0.woff2"
           maxWidth={size * 2.5}
           textAlign="center"
         >

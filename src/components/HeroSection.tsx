@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Send } from "lucide-react";
-import heroPhoto from "@/assets/hero-photo.jpg";
+import heroPhoto from "@/assets/hero.png";
 
 const HeroSection = () => (
   <section
