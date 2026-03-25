@@ -1,105 +1,69 @@
-import { Suspense, useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Text, Float, MeshTransmissionMaterial } from "@react-three/drei";
-import * as THREE from "three";
+import { Suspense, useMemo } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Html, Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
 
 const skills = [
   // Programming
-  { label: "Python", color: "#e88aab" },
-  { label: "C/C++", color: "#d4a0c0" },
-  { label: "JavaScript", color: "#f0b6c8" },
-  { label: "MATLAB", color: "#c9a0d4" },
-  { label: "HTML/CSS", color: "#e8a0b8" },
+  { label: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+  { label: "C/C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" },
+  { label: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+  { label: "MATLAB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg" },
+  { label: "HTML/CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
   // AI / ML
-  { label: "TensorFlow", color: "#e88aab" },
-  { label: "Scikit-learn", color: "#d4a0c0" },
-  { label: "LangChain", color: "#f0b6c8" },
-  { label: "Hugging Face", color: "#c9a0d4" },
-  { label: "LLMs", color: "#e8a0b8" },
-  { label: "RAG", color: "#e88aab" },
-  { label: "YOLOv8", color: "#d4a0c0" },
+  { label: "TensorFlow", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" },
+  { label: "Scikit-learn", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" },
+  { label: "LangChain", icon: "https://cdn.simpleicons.org/langchain/1C3C3C" },
+  { label: "Hugging Face", icon: "https://cdn.simpleicons.org/huggingface/FFD21E" },
+  { label: "LLMs", icon: "https://cdn.simpleicons.org/openai/412991" },
+  { label: "RAG", icon: "https://cdn.simpleicons.org/databricks/FF3621" },
+  { label: "YOLOv8", icon: "https://cdn.simpleicons.org/opencv/5C3EE8" },
   // Tools
-  { label: "NumPy", color: "#f0b6c8" },
-  { label: "Pandas", color: "#c9a0d4" },
-  { label: "PostgreSQL", color: "#e8a0b8" },
-  { label: "Git", color: "#e88aab" },
-  { label: "Docker", color: "#d4a0c0" },
-  { label: "FastAPI", color: "#f0b6c8" },
-  { label: "OpenCV", color: "#c9a0d4" },
-  { label: "Streamlit", color: "#e8a0b8" },
+  { label: "NumPy", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" },
+  { label: "Pandas", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" },
+  { label: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  { label: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+  { label: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+  { label: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" },
+  { label: "OpenCV", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg" },
+  { label: "Streamlit", icon: "https://cdn.simpleicons.org/streamlit/FF4B4B" },
 ];
 
 interface SkillBubbleProps {
   label: string;
-  color: string;
+  icon: string;
   position: [number, number, number];
-  size: number;
 }
 
-function SkillBubble({ label, color, position, size }: SkillBubbleProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const groupRef = useRef<THREE.Group>(null);
-  const hovered = useRef(false);
-  const scaleTarget = useRef(1);
-
-  useFrame((_, delta) => {
-    if (!meshRef.current) return;
-    const target = hovered.current ? 1.2 : 1;
-    scaleTarget.current = THREE.MathUtils.lerp(scaleTarget.current, target, delta * 5);
-    meshRef.current.scale.setScalar(scaleTarget.current);
-  });
-
+function SkillBubble({ label, icon, position }: SkillBubbleProps) {
   return (
     <Float
-      speed={1.5 + Math.random()}
-      rotationIntensity={0.3}
-      floatIntensity={0.6 + Math.random() * 0.4}
-      floatingRange={[-0.15, 0.15]}
+      speed={2 + Math.random()}
+      rotationIntensity={0.2}
+      floatIntensity={1 + Math.random()}
+      floatingRange={[-0.3, 0.3]}
+      position={position}
     >
-      <group ref={groupRef} position={position}>
-        <mesh
-          ref={meshRef}
-          onPointerOver={() => {
-            hovered.current = true;
-            document.body.style.cursor = "pointer";
-          }}
-          onPointerOut={() => {
-            hovered.current = false;
-            document.body.style.cursor = "auto";
-          }}
-        >
-          <sphereGeometry args={[size, 32, 32]} />
-          <meshStandardMaterial
-            color={color}
-            transparent
-            opacity={0.7}
-            roughness={0.1}
-            metalness={0.1}
-            emissive={color}
-            emissiveIntensity={0.15}
+      <Html transform center zIndexRange={[100, 0]}>
+        <div className="group flex flex-col items-center justify-center p-3 sm:p-4 w-24 h-24 sm:w-28 sm:h-28 bg-card/40 backdrop-blur-xl border border-border/50 rounded-[2rem] hover:bg-card/70 hover:scale-110 transition-all duration-300 shadow-xl cursor-default pointer-events-auto">
+          <img
+            src={icon}
+            alt={label}
+            className="w-10 h-10 sm:w-12 sm:h-12 object-contain mb-2 drop-shadow-md group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300"
           />
-        </mesh>
-        <Text
-          position={[0, 0, size + 0.02]}
-          fontSize={size * 0.45}
-          color="#4a2040"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={size * 2.5}
-          textAlign="center"
-        >
-          {label}
-        </Text>
-      </group>
+          <span className="text-[10px] sm:text-xs font-bold text-foreground/90 whitespace-nowrap opacity-80 group-hover:opacity-100 transition-opacity">
+            {label}
+          </span>
+        </div>
+      </Html>
     </Float>
   );
 }
 
 function generatePositions(count: number, cols: number): [number, number, number][] {
   const positions: [number, number, number][] = [];
-  const spacingX = 1.6;
-  const spacingY = 1.5;
+  const spacingX = 2.8;
+  const spacingY = 2.8;
   const rows = Math.ceil(count / cols);
 
   for (let i = 0; i < count; i++) {
@@ -110,9 +74,9 @@ function generatePositions(count: number, cols: number): [number, number, number
     const offsetY = ((rows - 1) * spacingY) / 2;
 
     positions.push([
-      offsetX + col * spacingX + (Math.random() - 0.5) * 0.3,
-      offsetY - row * spacingY + (Math.random() - 0.5) * 0.3,
-      (Math.random() - 0.5) * 0.5,
+      offsetX + col * spacingX + (Math.random() - 0.5) * 0.5,
+      offsetY - row * spacingY + (Math.random() - 0.5) * 0.5,
+      (Math.random() - 0.5) * 2,
     ]);
   }
   return positions;
@@ -131,11 +95,19 @@ function SkillsScene() {
         <SkillBubble
           key={skill.label}
           label={skill.label}
-          color={skill.color}
+          icon={skill.icon}
           position={positions[i]}
-          size={0.5}
         />
       ))}
+
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        autoRotate
+        autoRotateSpeed={0.8}
+        maxPolarAngle={Math.PI / 2 + 0.2}
+        minPolarAngle={Math.PI / 2 - 0.2}
+      />
     </>
   );
 }
@@ -167,7 +139,7 @@ const SkillsSection = () => (
         transition={{ duration: 0.6, delay: 0.1 }}
         className="text-center text-muted-foreground mb-8 max-w-md mx-auto"
       >
-        Hover over the bubbles to explore my tech stack
+        Drag to rotate the constellation. Hover over the cards to explore my tech stack.
       </motion.p>
 
       <motion.div
@@ -176,17 +148,17 @@ const SkillsSection = () => (
         whileInView="visible"
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="w-full h-[400px] sm:h-[500px] lg:h-[550px] glass-card overflow-hidden"
+        className="w-full h-[500px] sm:h-[600px] lg:h-[700px] glass-card overflow-hidden relative"
       >
         <Suspense
           fallback={
-            <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-              Loading 3D skills…
+            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+              Loading 3D skills constellation…
             </div>
           }
         >
           <Canvas
-            camera={{ position: [0, 0, 8], fov: 45 }}
+            camera={{ position: [0, 0, 10], fov: 45 }}
             dpr={[1, 1.5]}
             gl={{ antialias: true, alpha: true }}
             style={{ background: "transparent" }}
