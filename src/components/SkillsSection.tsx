@@ -1,27 +1,33 @@
 import { motion } from "framer-motion";
 
 const skills = [
-  { label: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
-  { label: "C/C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" },
-  { label: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
-  { label: "MATLAB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg" },
-  { label: "HTML/CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
-  { label: "TensorFlow", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" },
-  { label: "Scikit-learn", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" },
-  { label: "LangChain", icon: "https://cdn.simpleicons.org/langchain/1C3C3C" },
-  { label: "Hugging Face", icon: "https://cdn.simpleicons.org/huggingface/FFD21E" },
-  { label: "LLMs", icon: "https://cdn.simpleicons.org/openai/412991" },
-  { label: "RAG", icon: "https://cdn.simpleicons.org/databricks/FF3621" },
-  { label: "YOLOv8", icon: "https://cdn.simpleicons.org/opencv/5C3EE8" },
-  { label: "NumPy", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" },
-  { label: "Pandas", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" },
-  { label: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
-  { label: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
-  { label: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
-  { label: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" },
-  { label: "OpenCV", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg" },
-  { label: "Streamlit", icon: "https://cdn.simpleicons.org/streamlit/FF4B4B" },
+  { label: "Python", size: "lg" },
+  { label: "TensorFlow", size: "md" },
+  { label: "Scikit-learn", size: "md" },
+  { label: "LangChain", size: "sm" },
+  { label: "Hugging Face", size: "lg" },
+  { label: "LLMs", size: "md" },
+  { label: "RAG", size: "sm" },
+  { label: "YOLOv8", size: "md" },
+  { label: "C/C++", size: "sm" },
+  { label: "JavaScript", size: "sm" },
+  { label: "NumPy", size: "md" },
+  { label: "Pandas", size: "lg" },
+  { label: "PostgreSQL", size: "sm" },
+  { label: "Git", size: "md" },
+  { label: "Docker", size: "md" },
+  { label: "FastAPI", size: "sm" },
+  { label: "OpenCV", size: "lg" },
+  { label: "Streamlit", size: "sm" },
+  { label: "MATLAB", size: "sm" },
+  { label: "HTML/CSS", size: "sm" },
 ];
+
+const sizeMap = {
+  sm: "w-20 h-20 text-[10px]",
+  md: "w-24 h-24 text-xs",
+  lg: "w-28 h-28 text-sm",
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -29,13 +35,13 @@ const fadeUp = {
 };
 
 const floatAnimation = (i: number) => ({
-  y: [0, -8, 0],
-  rotate: [0, i % 2 === 0 ? 3 : -3, 0],
+  y: [0, -10 - (i % 4) * 3, 0],
+  x: [0, (i % 2 === 0 ? 4 : -4), 0],
   transition: {
-    duration: 3 + (i % 3) * 0.5,
+    duration: 3.5 + (i % 5) * 0.6,
     repeat: Infinity,
     ease: "easeInOut" as const,
-    delay: i * 0.15,
+    delay: i * 0.2,
   },
 });
 
@@ -59,12 +65,12 @@ const SkillsSection = () => (
         whileInView="visible"
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="text-center text-muted-foreground mb-12 max-w-md mx-auto"
+        className="text-center text-muted-foreground mb-14 max-w-md mx-auto"
       >
-        Hover over the icons to explore my tech stack.
+        Hover over the bubbles to explore my tech stack.
       </motion.p>
 
-      <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
         {skills.map((skill, i) => (
           <motion.div
             key={skill.label}
@@ -76,17 +82,16 @@ const SkillsSection = () => (
           >
             <motion.div
               animate={floatAnimation(i)}
-              whileHover={{ scale: 1.2, boxShadow: "0 0 24px hsl(340 65% 65% / 0.35)" }}
-              className="group flex flex-col items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-2xl glass-card cursor-default hover-lift"
+              whileHover={{
+                scale: 1.15,
+                boxShadow: "0 0 30px hsl(340 65% 65% / 0.4)",
+              }}
+              className={`${sizeMap[skill.size as keyof typeof sizeMap]} rounded-full flex items-center justify-center font-semibold text-primary cursor-default backdrop-blur-sm border border-primary/20 transition-all duration-300`}
+              style={{
+                background: "linear-gradient(135deg, hsl(340 65% 65% / 0.1), hsl(280 50% 75% / 0.15))",
+              }}
             >
-              <img
-                src={skill.icon}
-                alt={skill.label}
-                className="w-9 h-9 sm:w-11 sm:h-11 object-contain mb-1.5 drop-shadow-md group-hover:scale-110 transition-transform duration-300"
-              />
-              <span className="text-[9px] sm:text-[10px] font-semibold text-muted-foreground whitespace-nowrap group-hover:text-primary transition-colors duration-300">
-                {skill.label}
-              </span>
+              {skill.label}
             </motion.div>
           </motion.div>
         ))}
