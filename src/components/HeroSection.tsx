@@ -39,7 +39,14 @@ const HeroSection = () => {
           className="order-2 md:order-1 text-center md:text-left"
         >
           <p className="text-sm font-medium tracking-widest uppercase text-primary mb-3">
-            Welcome to my portfolio
+            Welcome to my portfolio{" "}
+            <motion.span
+              className="inline-block origin-[70%_70%]"
+              animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
+              transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1, ease: "easeInOut" }}
+            >
+              👋
+            </motion.span>
           </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold leading-tight mb-4">
             Hi, I'm{" "}

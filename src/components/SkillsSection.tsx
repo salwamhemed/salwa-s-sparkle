@@ -1,49 +1,36 @@
 import { motion } from "framer-motion";
+import {
+  Brain, Eye, BarChart3, Code2, Globe, Wrench,
+  FileCode, Database, GitBranch, Terminal, Cpu, Layers
+} from "lucide-react";
 
 const skills = [
-  { label: "Python", size: "lg" },
-  { label: "TensorFlow", size: "md" },
-  { label: "Scikit-learn", size: "md" },
-  { label: "LangChain", size: "sm" },
-  { label: "Hugging Face", size: "lg" },
-  { label: "LLMs", size: "md" },
-  { label: "RAG", size: "sm" },
-  { label: "YOLOv8", size: "md" },
-  { label: "C/C++", size: "sm" },
-  { label: "JavaScript", size: "sm" },
-  { label: "NumPy", size: "md" },
-  { label: "Pandas", size: "lg" },
-  { label: "PostgreSQL", size: "sm" },
-  { label: "Git", size: "md" },
-  { label: "Docker", size: "md" },
-  { label: "FastAPI", size: "sm" },
-  { label: "OpenCV", size: "lg" },
-  { label: "Streamlit", size: "sm" },
-  { label: "MATLAB", size: "sm" },
-  { label: "HTML/CSS", size: "sm" },
+  { label: "Python", icon: FileCode },
+  { label: "TensorFlow", icon: Cpu },
+  { label: "Scikit-learn", icon: Brain },
+  { label: "LangChain", icon: Layers },
+  { label: "Hugging Face", icon: Brain },
+  { label: "LLMs", icon: Terminal },
+  { label: "RAG", icon: Layers },
+  { label: "YOLOv8", icon: Eye },
+  { label: "C/C++", icon: Code2 },
+  { label: "JavaScript", icon: Globe },
+  { label: "NumPy", icon: BarChart3 },
+  { label: "Pandas", icon: BarChart3 },
+  { label: "PostgreSQL", icon: Database },
+  { label: "Git", icon: GitBranch },
+  { label: "Docker", icon: Wrench },
+  { label: "FastAPI", icon: Globe },
+  { label: "OpenCV", icon: Eye },
+  { label: "Streamlit", icon: Globe },
+  { label: "MATLAB", icon: Cpu },
+  { label: "HTML/CSS", icon: Code2 },
 ];
 
-const sizeMap = {
-  sm: "w-20 h-20 text-[10px]",
-  md: "w-24 h-24 text-xs",
-  lg: "w-28 h-28 text-sm",
-};
-
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
-
-const floatAnimation = (i: number) => ({
-  y: [0, -10 - (i % 4) * 3, 0],
-  x: [0, (i % 2 === 0 ? 4 : -4), 0],
-  transition: {
-    duration: 3.5 + (i % 5) * 0.6,
-    repeat: Infinity,
-    ease: "easeInOut" as const,
-    delay: i * 0.2,
-  },
-});
 
 const SkillsSection = () => (
   <section id="skills" className="py-24 bg-secondary/30">
@@ -53,7 +40,7 @@ const SkillsSection = () => (
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.5 }}
         className="text-3xl sm:text-4xl font-heading font-bold text-center mb-4"
       >
         Technical <span className="gradient-text">Skills</span>
@@ -64,37 +51,32 @@ const SkillsSection = () => (
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="text-center text-muted-foreground mb-14 max-w-md mx-auto"
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="text-center text-muted-foreground mb-12 max-w-md mx-auto"
       >
-        Hover over the bubbles to explore my tech stack.
+        Technologies and tools I work with.
       </motion.p>
 
-      <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
-        {skills.map((skill, i) => (
-          <motion.div
-            key={skill.label}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.04 }}
-          >
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {skills.map((skill, i) => {
+          const Icon = skill.icon;
+          return (
             <motion.div
-              animate={floatAnimation(i)}
-              whileHover={{
-                scale: 1.15,
-                boxShadow: "0 0 30px hsl(340 65% 65% / 0.4)",
-              }}
-              className={`${sizeMap[skill.size as keyof typeof sizeMap]} rounded-full flex items-center justify-center font-semibold text-primary cursor-default backdrop-blur-sm border border-primary/20 transition-all duration-300`}
-              style={{
-                background: "linear-gradient(135deg, hsl(340 65% 65% / 0.1), hsl(280 50% 75% / 0.15))",
-              }}
+              key={skill.label}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.03 }}
+              className="group glass-card p-5 flex flex-col items-center gap-3 text-center cursor-default hover:-translate-y-1 hover:shadow-[var(--shadow-soft)] transition-all duration-300"
             >
-              {skill.label}
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                <Icon size={20} className="text-primary" />
+              </div>
+              <span className="text-sm font-medium text-foreground">{skill.label}</span>
             </motion.div>
-          </motion.div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
