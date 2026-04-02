@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Send, Linkedin, Github } from "lucide-react";
+import { Mail, Send, Linkedin, Github, MessageCircle, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const fadeUp = {
@@ -19,18 +19,39 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-secondary/30">
-      <div className="container max-w-5xl">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
+    <section id="contact" className="py-24 bg-secondary/30 relative overflow-hidden">
+      {/* Decorative animated elements */}
+      <motion.div
+        className="absolute top-16 right-16 text-primary/10"
+        animate={{ y: [-10, 10, -10], rotate: [0, 10, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <MessageCircle size={60} />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-20 left-12 text-accent/15"
+        animate={{ y: [10, -10, 10], rotate: [0, -5, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Sparkles size={44} />
+      </motion.div>
+      <div className="absolute top-1/3 left-1/3 w-48 h-48 rounded-full bg-primary/5 blur-3xl animate-float" />
+
+      <div className="container max-w-5xl relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-3xl sm:text-4xl font-heading font-bold text-center mb-4"
+          className="text-center mb-4"
         >
-          Get In <span className="gradient-text">Touch</span>
-        </motion.h2>
+          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-primary mb-3">
+            <Send size={14} /> Say Hello
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-heading font-bold">
+            Get In <span className="gradient-text">Touch</span>
+          </h2>
+        </motion.div>
         <motion.p
           variants={fadeUp}
           initial="hidden"
@@ -52,11 +73,18 @@ const ContactSection = () => {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="space-y-6"
           >
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6"
+              whileHover={{ y: -3 }}
+              transition={{ type: "spring", stiffness: 200 }}
+            >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <motion.div
+                  className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
+                  whileHover={{ scale: 1.1, rotate: 10 }}
+                >
                   <Mail className="text-primary" size={18} />
-                </div>
+                </motion.div>
                 <div>
                   <p className="text-sm font-medium text-foreground">Email</p>
                   <a href="mailto:salwa.mhemed05@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">
@@ -64,19 +92,33 @@ const ContactSection = () => {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6"
+              whileHover={{ y: -3 }}
+              transition={{ type: "spring", stiffness: 200 }}
+            >
               <p className="text-sm font-medium text-foreground mb-4">Connect with me</p>
               <div className="flex items-center gap-3">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">
-                  <Linkedin size={18} />
-                </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">
-                  <Github size={18} />
-                </a>
+                {[
+                  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+                  { icon: Github, href: "https://github.com", label: "GitHub" },
+                ].map((social) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
+                    whileHover={{ scale: 1.15, rotate: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <social.icon size={18} />
+                  </motion.a>
+                ))}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Form */}
@@ -96,7 +138,7 @@ const ContactSection = () => {
                 maxLength={100}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-shadow"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-300"
               />
               <input
                 type="email"
@@ -105,7 +147,7 @@ const ContactSection = () => {
                 maxLength={255}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-shadow"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-300"
               />
               <textarea
                 placeholder="Your Message"
@@ -114,15 +156,17 @@ const ContactSection = () => {
                 rows={5}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-shadow resize-none"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-300 resize-none"
               />
-              <button
+              <motion.button
                 type="submit"
                 className="w-full py-3 rounded-xl font-medium flex items-center justify-center gap-2 text-primary-foreground hover:opacity-90 transition-opacity duration-300"
                 style={{ background: "var(--gradient-primary)" }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 Send Message <Send size={16} />
-              </button>
+              </motion.button>
             </form>
           </motion.div>
         </div>
