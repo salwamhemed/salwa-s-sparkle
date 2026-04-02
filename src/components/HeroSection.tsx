@@ -5,9 +5,7 @@ import heroPhoto from "@/assets/hero.png";
 
 const roles = [
   "Machine Learning Engineer",
-  "Data Scientist",
-  "AI Enthusiast",
-  "NLP Specialist",
+  "Data Enthusiast",
 ];
 
 const HeroSection = () => {
@@ -70,7 +68,7 @@ const HeroSection = () => {
           </div>
 
           <p className="text-muted-foreground max-w-md mx-auto md:mx-0 mb-8">
-            Building intelligent systems from data to impact — passionate about NLP, AI applications, and turning complex data into meaningful solutions.
+          Engineering graduate from INSAT, passionate about AI, ML, and Data! looking for a first experience to apply these skills to real-world problems.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center md:justify-start">

@@ -1,48 +1,61 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github, Rocket } from "lucide-react";
+import churnimg from "@/assets/churn.jpg";
+import aslimg from "@/assets/asl.jpg";
+import animeimg from "@/assets/anime2.jpg"
+import breastimg from "@/assets/breast.png"
+import pdfimg from "@/assets/pdf.png"
+import tennisimg from "@/assets/tennis.jpg"
+
 
 const projects = [
   {
     title: "Churn Prediction Model",
     desc: "End-to-end ML pipeline for customer churn prediction with automated deployment via CI/CD.",
     tech: ["FastAPI", "Docker", "GitHub Actions", "Scikit-learn"],
-    github: "#",
+    github: "https://github.com/salwamhemed/Churn-Prediction-Model",
+    image: churnimg,
     demo: "#",
   },
   {
     title: "AI/NLP Anime Analysis",
     desc: "Zero-shot classification and named entity recognition for anime content analysis with chatbot integration.",
-    tech: ["Hugging Face", "spaCy", "NetworkX", "LLaMA"],
+    tech: ["Hugging Face", "spaCy", "NetworkX", "LLaMA", "Gradio"],
     github: "#",
     demo: "#",
+    image: animeimg
   },
   {
     title: "Multi-PDF Conversational AI",
     desc: "RAG-powered PDF Q&A system with conversational memory for multi-document querying.",
     tech: ["LangChain", "RAG", "Streamlit", "OpenAI"],
-    github: "#",
+    github: "https://github.com/salwamhemed/Multi-PDF-Conversational-AI-Application",
     demo: "#",
+    image: pdfimg
   },
   {
     title: "Tennis Analysis System",
     desc: "Real-time player and ball tracking with performance analytics using computer vision.",
     tech: ["YOLOv8", "OpenCV", "Python"],
-    github: "#",
+    github: "https://github.com/salwamhemed/Tennis-Analysis-System",
     demo: "#",
+    image: tennisimg
   },
   {
-    title: "Financial Document Structuring",
-    desc: "NLP pipeline for extracting and structuring data from complex financial documents using LLMs.",
-    tech: ["PyMuPDF", "Hugging Face", "LLaMA", "Python"],
-    github: "#",
+    title: "ASL Detection and Recognition System on Raspberry Pi",
+    desc: "Real-time ASL recognition system built with TensorFlow and CNNs, deployed on Raspberry Pi using TensorFlow Lite.",
+    tech: ["Tensorflow", "OpenCv", "CNNs", "Raspberry Pi"],
+    github: "https://github.com/salwamhemed/PFA---ASL-detection-and-recognition",
     demo: "#",
+    image: aslimg
   },
   {
-    title: "Drone Simulation Pipeline",
-    desc: "Data pipelines for drone simulation inputs with telemetry analysis and model evaluation.",
-    tech: ["Python", "Pandas", "NumPy", "Data Analysis"],
-    github: "#",
+    title: "CNN Application in Breast Cancer Classification",
+    desc: "CNN-based system for early breast cancer detection using VGG19 and ResNet50 on the MIAS mammogram dataset.",
+    tech: ["Python", "ResNet50", "Vgg19", "Seaborn"],
+    github: "https://github.com/salwamhemed/Breast-Cancer-Classification",
     demo: "#",
+    image: breastimg
   },
 ];
 
@@ -92,23 +105,33 @@ const ProjectsSection = () => (
             whileHover={{ y: -8 }}
             className="glass-card group overflow-hidden transition-shadow duration-300 hover:shadow-[var(--shadow-soft)]"
           >
-            {/* Image placeholder */}
+            {/* Image */}
             <div className="relative h-44 overflow-hidden bg-secondary/50">
-              <motion.div
-                className="absolute inset-0"
-                style={{ background: "var(--gradient-primary)", opacity: 0.15 }}
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.5 }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.span
-                  className="text-5xl font-heading font-bold text-primary/20"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  transition={{ type: "spring" }}
-                >
-                  {p.title.charAt(0)}
-                </motion.span>
-              </div>
+              {p.image ? (
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <>
+                  <motion.div
+                    className="absolute inset-0"
+                    style={{ background: "var(--gradient-primary)", opacity: 0.15 }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.span
+                      className="text-5xl font-heading font-bold text-primary/20"
+                      whileHover={{ scale: 1.2, rotate: 5 }}
+                      transition={{ type: "spring" }}
+                    >
+                      {p.title.charAt(0)}
+                    </motion.span>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="p-6">
