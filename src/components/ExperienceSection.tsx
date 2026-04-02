@@ -38,44 +38,67 @@ const experiences = [
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0 },
 };
 
 const ExperienceSection = () => (
-  <section id="experience" className="py-24 bg-secondary/30">
-    <div className="container max-w-4xl">
-      <motion.h2
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
+  <section id="experience" className="py-24 bg-secondary/30 relative overflow-hidden">
+    <div className="absolute bottom-0 right-0 w-56 h-56 rounded-full bg-accent/10 blur-3xl animate-float-slow" />
+
+    <div className="container max-w-4xl relative">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-3xl sm:text-4xl font-heading font-bold text-center mb-12"
+        className="text-center mb-12"
       >
-        Work <span className="gradient-text">Experience</span>
-      </motion.h2>
+        <span className="inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-primary mb-3">
+          <Briefcase size={14} /> Career
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold">
+          Work <span className="gradient-text">Experience</span>
+        </h2>
+      </motion.div>
 
       <div className="relative">
         {/* Timeline line */}
         <div className="absolute left-6 top-0 bottom-0 w-px bg-border hidden sm:block" />
 
-        <div className="space-y-10">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="space-y-10"
+        >
           {experiences.map((exp, i) => (
             <motion.div
               key={i}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 * i }}
+              variants={cardVariant}
+              transition={{ duration: 0.5, type: "spring", stiffness: 80 }}
               className="relative sm:pl-16"
             >
-              {/* Timeline dot */}
-              <div className="absolute left-4 top-2 w-5 h-5 rounded-full bg-primary border-4 border-background hidden sm:block" />
+              {/* Timeline dot with pulse */}
+              <motion.div
+                className="absolute left-4 top-2 w-5 h-5 rounded-full bg-primary border-4 border-background hidden sm:block"
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 + i * 0.15, type: "spring" }}
+              />
 
-              <div className="glass-card p-6 hover-lift">
+              <motion.div
+                className="glass-card p-6 transition-shadow duration-300 hover:shadow-[var(--shadow-soft)]"
+                whileHover={{ y: -4 }}
+              >
                 <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
                   <div>
                     <h3 className="font-heading font-semibold text-lg">{exp.role}</h3>
@@ -96,10 +119,10 @@ const ExperienceSection = () => (
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   </section>

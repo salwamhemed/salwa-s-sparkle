@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Rocket } from "lucide-react";
 
 const projects = [
   {
@@ -46,46 +46,68 @@ const projects = [
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1 },
 };
 
 const ProjectsSection = () => (
-  <section id="projects" className="py-24">
-    <div className="container max-w-6xl">
-      <motion.h2
-        variants={fadeUp}
+  <section id="projects" className="py-24 relative overflow-hidden">
+    {/* Decorative */}
+    <div className="absolute top-1/4 right-0 w-60 h-60 rounded-full bg-primary/5 blur-3xl animate-float" />
+
+    <div className="container max-w-6xl relative">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12"
+      >
+        <span className="inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-primary mb-3">
+          <Rocket size={14} /> Portfolio
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold">
+          Featured <span className="gradient-text">Projects</span>
+        </h2>
+      </motion.div>
+
+      <motion.div
+        variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-3xl sm:text-4xl font-heading font-bold text-center mb-12"
+        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        Featured <span className="gradient-text">Projects</span>
-      </motion.h2>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((p, i) => (
+        {projects.map((p) => (
           <motion.div
             key={p.title}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.08 * i }}
-            className="glass-card group hover-lift overflow-hidden"
+            variants={cardVariant}
+            transition={{ duration: 0.5, type: "spring", stiffness: 80 }}
+            whileHover={{ y: -8 }}
+            className="glass-card group overflow-hidden transition-shadow duration-300 hover:shadow-[var(--shadow-soft)]"
           >
             {/* Image placeholder */}
             <div className="relative h-44 overflow-hidden bg-secondary/50">
-              <div
-                className="absolute inset-0 group-hover:scale-110 transition-transform duration-500"
+              <motion.div
+                className="absolute inset-0"
                 style={{ background: "var(--gradient-primary)", opacity: 0.15 }}
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.5 }}
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-4xl font-heading font-bold text-primary/20">
+                <motion.span
+                  className="text-5xl font-heading font-bold text-primary/20"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ type: "spring" }}
+                >
                   {p.title.charAt(0)}
-                </span>
+                </motion.span>
               </div>
             </div>
 
@@ -105,27 +127,29 @@ const ProjectsSection = () => (
               </div>
 
               <div className="flex items-center gap-3">
-                <a
+                <motion.a
                   href={p.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-primary transition-colors"
+                  whileHover={{ x: 2 }}
                 >
                   <Github size={14} /> GitHub
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href={p.demo}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-primary transition-colors"
+                  whileHover={{ x: 2 }}
                 >
                   <ExternalLink size={14} /> Live Demo
-                </a>
+                </motion.a>
               </div>
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   </section>
 );

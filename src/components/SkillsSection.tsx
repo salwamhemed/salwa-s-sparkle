@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import {
   Brain, Eye, BarChart3, Code2, Globe, Wrench,
-  FileCode, Database, GitBranch, Terminal, Cpu, Layers
+  FileCode, Database, GitBranch, Terminal, Cpu, Layers,
+  Sparkles
 } from "lucide-react";
 
 const skills = [
@@ -27,29 +28,50 @@ const skills = [
   { label: "HTML/CSS", icon: Code2 },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
+const container = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 30, scale: 0.9 },
+  visible: { opacity: 1, y: 0, scale: 1 },
 };
 
 const SkillsSection = () => (
-  <section id="skills" className="py-24 bg-secondary/30">
-    <div className="container max-w-5xl">
-      <motion.h2
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
+  <section id="skills" className="py-24 bg-secondary/30 relative overflow-hidden">
+    {/* Decorative elements */}
+    <div className="absolute top-10 right-10 w-40 h-40 rounded-full bg-primary/5 blur-3xl animate-float" />
+    <div className="absolute bottom-10 left-10 w-32 h-32 rounded-full bg-accent/10 blur-3xl animate-float-slow" />
+    <motion.div
+      className="absolute top-20 left-1/4 text-primary/10"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+    >
+      <Sparkles size={40} />
+    </motion.div>
+
+    <div className="container max-w-5xl relative">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="text-3xl sm:text-4xl font-heading font-bold text-center mb-4"
+        className="text-center mb-4"
       >
-        Technical <span className="gradient-text">Skills</span>
-      </motion.h2>
+        <span className="inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-primary mb-3">
+          <Sparkles size={14} /> My Toolkit
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold">
+          Technical <span className="gradient-text">Skills</span>
+        </h2>
+      </motion.div>
 
       <motion.p
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
         className="text-center text-muted-foreground mb-12 max-w-md mx-auto"
@@ -57,27 +79,35 @@ const SkillsSection = () => (
         Technologies and tools I work with.
       </motion.p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {skills.map((skill, i) => {
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+      >
+        {skills.map((skill) => {
           const Icon = skill.icon;
           return (
             <motion.div
               key={skill.label}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.03 }}
-              className="group glass-card p-5 flex flex-col items-center gap-3 text-center cursor-default hover:-translate-y-1 hover:shadow-[var(--shadow-soft)] transition-all duration-300"
+              variants={cardVariant}
+              transition={{ duration: 0.4, type: "spring", stiffness: 100 }}
+              whileHover={{ y: -6, scale: 1.05 }}
+              className="group glass-card p-5 flex flex-col items-center gap-3 text-center cursor-default transition-shadow duration-300 hover:shadow-[var(--shadow-soft)]"
             >
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+              <motion.div
+                className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300"
+                whileHover={{ rotate: [0, -10, 10, 0] }}
+                transition={{ duration: 0.5 }}
+              >
                 <Icon size={20} className="text-primary" />
-              </div>
+              </motion.div>
               <span className="text-sm font-medium text-foreground">{skill.label}</span>
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   </section>
 );
