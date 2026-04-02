@@ -33,7 +33,6 @@ const experiences = [
     points: [
       "Built frontend interfaces with React.js",
       "Developed backend services using Node.js + MongoDB",
-      "Implemented real-time updates for inventory and orders",
     ],
   },
 ];
