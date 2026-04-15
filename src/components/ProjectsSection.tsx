@@ -10,19 +10,33 @@ import tennisimg from "@/assets/tennis.jpg"
 
 const projects = [
   {
+    title: "ASL Detection and Recognition System on Raspberry Pi",
+    desc: "Real-time ASL recognition system built with TensorFlow and CNNs, deployed on Raspberry Pi using TensorFlow Lite.",
+    tech: ["Tensorflow", "OpenCv", "CNNs", "Raspberry Pi"],
+    github: "https://github.com/salwamhemed/PFA---ASL-detection-and-recognition",
+    demo: "/test_salwa.mp4" ,
+    image: aslimg
+  },
+  {
+    title: "Tennis Analysis System",
+    desc: "Real-time player and ball tracking with performance analytics using computer vision.",
+    tech: ["YOLOv8", "OpenCV", "Python"],
+    github: "https://github.com/salwamhemed/Tennis-Analysis-System",
+    demo: "/final_video.mp4",
+    image: tennisimg
+  },
+  {
     title: "Churn Prediction Model",
     desc: "End-to-end ML pipeline for customer churn prediction with automated deployment via CI/CD.",
     tech: ["FastAPI", "Docker", "GitHub Actions", "Scikit-learn"],
     github: "https://github.com/salwamhemed/Churn-Prediction-Model",
     image: churnimg,
-    demo: "#",
   },
   {
     title: "AI/NLP Anime Analysis",
     desc: "Zero-shot classification and named entity recognition for anime content analysis with chatbot integration.",
     tech: ["Hugging Face", "spaCy", "NetworkX", "LLaMA", "Gradio"],
     github: "#",
-    demo: "#",
     image: animeimg
   },
   {
@@ -30,31 +44,15 @@ const projects = [
     desc: "RAG-powered PDF Q&A system with conversational memory for multi-document querying.",
     tech: ["LangChain", "RAG", "Streamlit", "OpenAI"],
     github: "https://github.com/salwamhemed/Multi-PDF-Conversational-AI-Application",
-    demo: "#",
     image: pdfimg
   },
-  {
-    title: "Tennis Analysis System",
-    desc: "Real-time player and ball tracking with performance analytics using computer vision.",
-    tech: ["YOLOv8", "OpenCV", "Python"],
-    github: "https://github.com/salwamhemed/Tennis-Analysis-System",
-    demo: "#",
-    image: tennisimg
-  },
-  {
-    title: "ASL Detection and Recognition System on Raspberry Pi",
-    desc: "Real-time ASL recognition system built with TensorFlow and CNNs, deployed on Raspberry Pi using TensorFlow Lite.",
-    tech: ["Tensorflow", "OpenCv", "CNNs", "Raspberry Pi"],
-    github: "https://github.com/salwamhemed/PFA---ASL-detection-and-recognition",
-    demo: "#",
-    image: aslimg
-  },
+
+
   {
     title: "CNN Application in Breast Cancer Classification",
     desc: "CNN-based system for early breast cancer detection using VGG19 and ResNet50 on the MIAS mammogram dataset.",
     tech: ["Python", "ResNet50", "Vgg19", "Seaborn"],
     github: "https://github.com/salwamhemed/Breast-Cancer-Classification",
-    demo: "#",
     image: breastimg
   },
 ];
